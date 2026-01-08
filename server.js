@@ -62,7 +62,7 @@ app.post('/deleteitem', async (req,res) => {
 });
 
 app.post('/deleteitem/:id', async (req,res) => {
-    const { id } = req.params.id;
+    const { id } = req.params;
     try {
         let connection = await mysql.createConnection(dbConfig);
         await connection.execute('DELETE FROM items WHERE id = (?)', [id]);
