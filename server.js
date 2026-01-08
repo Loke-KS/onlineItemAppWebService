@@ -61,6 +61,18 @@ app.post('/deleteitem', async (req,res) => {
     }
 });
 
+app.post('/deleteitem/:id', async (req,res) => {
+    const { id } = req.params.id;
+    try {
+        let connection = await mysql.createConnection(dbConfig);
+        await connection.execute('DELETE FROM items WHERE id = (?)', [id]);
+        res.status(201).json({ message: 'Item '+id+' deleted successfully'});
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: 'Server error - could not delete item '+id });
+    }
+});
+
 app.post('/updateitem', async (req,res) => {
     const { id, item_name, item_price } = req.body;
     try {
