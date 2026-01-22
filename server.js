@@ -38,10 +38,10 @@ app.get('/allitems', async (req,res) => {
 });
 
 app.post('/additem', async (req, res) => {
-    const { item_name, item_price } = req.body;
+    const { item_name, item_price, item_pic, item_qty } = req.body;
     try {
         let connection = await mysql.createConnection(dbConfig);
-        await connection.execute('INSERT INTO items (item_name, item_price) VALUES (?, ?)', [item_name, item_price]);
+        await connection.execute('INSERT INTO items (item_name, item_price, item_pic, item_qty) VALUES (?, ?)', [item_name, item_price, item_pic, item_qty]);
         res.status(201).json({ message: 'Item '+item_name+' added successfully'});
     } catch (err) {
         console.error(err);
@@ -63,10 +63,10 @@ app.post('/deleteitem/:id', async (req,res) => {
 
 app.post('/updateitem/id', async (req,res) => {
     const { id } = req.params;
-    const { item_name, item_price } = req.body;
+    const { item_name, item_price, item_pic, item_qty } = req.body;
     try {
         let connection = await mysql.createConnection(dbConfig);
-        await connection.execute('UPDATE items SET item_name = (?), item_price = (?) WHERE id = (?)', [item_name, item_price, id]);
+        await connection.execute('UPDATE items SET item_name = (?), item_price = (?), item_pic = (?), item_qty = (?), WHERE id = (?)', [item_name, item_price, item_pic, item_qty, id]);
         res.status(201).json({ message: 'Item '+id+' updated successfully'});
     } catch (err) {
         console.error(err);
