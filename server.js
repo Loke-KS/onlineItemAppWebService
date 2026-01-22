@@ -66,7 +66,7 @@ app.put('/updateitem/id', async (req,res) => {
     const { item_name, item_price, item_pic, item_qty } = req.body;
     try {
         let connection = await mysql.createConnection(dbConfig);
-        await connection.execute('UPDATE items SET item_name = (?), item_price = (?), item_pic = (?), item_qty = (?), WHERE id = (?)', [item_name, item_price, item_pic, item_qty, id]);
+        await connection.execute('UPDATE items SET item_name = (?), item_price = (?), item_pic = (?), item_qty = (?), WHERE id =?', [item_name, item_price, item_pic, item_qty, id]);
         res.status(201).json({ message: 'Item '+id+' updated successfully'});
     } catch (err) {
         console.error(err);
