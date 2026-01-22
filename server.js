@@ -61,7 +61,7 @@ app.delete('/deleteitem/:id', async (req,res) => {
     }
 });
 
-app.put('/updateitem/id', async (req,res) => {
+app.put('/updateitem/:id', async (req,res) => {
     const { id } = req.params;
     const { item_name, item_price, item_pic, item_qty } = req.body;
     try {
