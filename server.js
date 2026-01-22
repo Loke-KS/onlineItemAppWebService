@@ -49,11 +49,11 @@ app.post('/additem', async (req, res) => {
     }
 });
 
-app.post('/deleteitem', async (req,res) => {
-    const { id } = req.body;
+app.post('/deleteitem/:id', async (req,res) => {
+    const { id } = req.params;
     try {
         let connection = await mysql.createConnection(dbConfig);
-        await connection.execute('DELETE FROM items WHERE id = (?)', [id]);
+        await connection.execute('DELETE FROM items WHERE id =?', [id]);
         res.status(201).json({ message: 'Item '+id+' deleted successfully'});
     } catch (err) {
         console.error(err);
@@ -61,8 +61,9 @@ app.post('/deleteitem', async (req,res) => {
     }
 });
 
-app.post('/updateitem', async (req,res) => {
-    const { id, item_name, item_price } = req.body;
+app.post('/updateitem/id', async (req,res) => {
+    const { id } = req.params;
+    const { item_name, item_price } = req.body;
     try {
         let connection = await mysql.createConnection(dbConfig);
         await connection.execute('UPDATE items SET item_name = (?), item_price = (?) WHERE id = (?)', [item_name, item_price, id]);
