@@ -41,7 +41,7 @@ app.post('/additem', async (req, res) => {
     const { item_name, item_price, item_pic, item_qty } = req.body;
     try {
         let connection = await mysql.createConnection(dbConfig);
-        await connection.execute('INSERT INTO items (item_name, item_price, item_pic, item_qty) VALUES (?, ?)', [item_name, item_price, item_pic, item_qty]);
+        await connection.execute('INSERT INTO items (item_name, item_price, item_pic, item_qty) VALUES (?, ?, ?, ?)', [item_name, item_price, item_pic, item_qty]);
         res.status(201).json({ message: 'Item '+item_name+' added successfully'});
     } catch (err) {
         console.error(err);
